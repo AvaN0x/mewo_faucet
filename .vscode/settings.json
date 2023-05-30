@@ -1,4 +1,5 @@
 {
+    "git.detectSubmodules": false,
     "conventionalCommits.scopes": [
         "frontend",
         "contract"
