@@ -1,4 +1,4 @@
-name: test
+name: Test contract
 
 on:
   # Runs on pushes targeting the default branch
@@ -30,13 +30,13 @@ jobs:
 
       - name: Run Forge build
         run: |
-          cd ./apps/contracts
+          cd ./apps/contract
           forge --version
           forge build --sizes
         id: build
 
       - name: Run Forge tests
         run: |
-          cd ./apps/contracts
+          cd ./apps/contract
           forge test -vvv
         id: test
