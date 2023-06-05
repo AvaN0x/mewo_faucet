@@ -3,13 +3,9 @@ import MainContainer from 'components/MainContainer';
 import { useFaucet } from 'context/FaucetProvider';
 import dayjs from 'dayjs';
 import { faucetContractABI } from 'lib/contract';
-import {
-  useAccount,
-  useContractRead,
-  useContractWrite,
-  usePrepareContractWrite,
-} from 'wagmi';
+import { useAccount, useContractWrite, usePrepareContractWrite } from 'wagmi';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import { toast } from 'react-toastify';
 
 dayjs.extend(relativeTime);
 
@@ -37,6 +33,7 @@ function App() {
     } catch (error) {
       reset?.();
       refetch?.();
+      toast.error('An error occured while making the transaction.');
     }
   };
 
@@ -57,7 +54,7 @@ function App() {
   return (
     <>
       <MainContainer>
-        <Button onClick={handleClick} disabled={FaucetButtonDisabled}>
+        <Button onClick={handleClick} disabled={FaucetButtonDisabled && false}>
           Mint MEWO
         </Button>
         {alreadyMinted && <span>Next mint {nextMintMinDate.fromNow()}</span>}

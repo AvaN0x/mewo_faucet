@@ -1,4 +1,5 @@
 import Button from 'components/Button';
+import { toast } from 'react-toastify';
 import { useConnect } from 'wagmi';
 import { InjectedConnector } from 'wagmi/connectors/injected';
 
@@ -11,6 +12,7 @@ export default function Login() {
       connect();
     } catch (error) {
       console.error(error);
+      toast.error('An error occured while connecting to the wallet.');
     }
   };
 

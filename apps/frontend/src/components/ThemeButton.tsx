@@ -16,7 +16,7 @@ export default function ThemeButton({ children }: { children?: ReactNode }) {
 
   return (
     <Button
-      className="absolute top-6 max-[480px]:top-20 right-6 bg-slate-500 dark:bg-slate-600 !aspect-square !w-10 !h-10 !text-white !rounded-full shadow-2xl hover:scale-105 transition-transform"
+      className="absolute top-6 max-[480px]:top-20 right-6 bg-slate-500 dark:bg-slate-600 !aspect-square !w-10 !h-10 !text-white hover:!text-primary !rounded-full shadow-2xl hover:scale-105 transition-transform"
       onClick={handleClick}
     >
       {theme === 'dark' && <FontAwesomeIcon icon={faMoon} />}
