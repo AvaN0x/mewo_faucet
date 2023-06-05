@@ -46,6 +46,7 @@ jobs:
           yarn build
         env:
           VITE_ETHERSCAN_URL: '${{ secrets.VITE_ETHERSCAN_URL }}'
+          VITE_MEWO_ADDRESS: '${{ secrets.VITE_MEWO_ADDRESS }}'
           VITE_FAUCET_ADDRESS: '${{ secrets.VITE_FAUCET_ADDRESS }}'
       - name: Setup Pages
         uses: actions/configure-pages@v3
