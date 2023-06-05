@@ -6,10 +6,16 @@ import { faucetContractABI } from 'lib/contract';
 import { useAccount, useContractWrite, usePrepareContractWrite } from 'wagmi';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { toast } from 'react-toastify';
+import { waitForTransaction } from '@wagmi/core';
+import { useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 dayjs.extend(relativeTime);
 
 function App() {
+  const [processingTransaction, setProcessingTransaction] = useState(false);
+
   const { address } = useAccount();
   const { maxMint, lastMinted, mintInterval, isError, isLoading, refetch } =
     useFaucet();
@@ -28,12 +34,25 @@ function App() {
   } = useContractWrite(config);
 
   const handleClick = async () => {
+    if (!writeAsync) return;
+
+    setProcessingTransaction(true);
     try {
-      await writeAsync?.();
+      const { hash } = await writeAsync();
+      await waitForTransaction({
+        hash,
+      });
     } catch (error) {
       reset?.();
-      refetch?.();
       toast.error('An error occured while making the transaction.');
+    } finally {
+      await refetch?.();
+      // Refetch after timeout
+      setTimeout(() => {
+        refetch?.();
+      }, Number((lastMinted * 1000n).toString()));
+
+      setProcessingTransaction(false);
     }
   };
 
@@ -44,6 +63,7 @@ function App() {
   const alreadyMinted = nextMintMinDate.isAfter(dayjs());
 
   const FaucetButtonDisabled =
+    processingTransaction ||
     !writeAsync ||
     isError ||
     isLoading ||
@@ -54,9 +74,20 @@ function App() {
   return (
     <>
       <MainContainer>
-        <Button onClick={handleClick} disabled={FaucetButtonDisabled && false}>
-          Mint MEWO
-        </Button>
+        <div>
+          <div className="inline-block">
+            <Button onClick={handleClick} disabled={FaucetButtonDisabled}>
+              Mint MEWO
+            </Button>
+          </div>
+          {processingTransaction && (
+            <FontAwesomeIcon
+              icon={faSpinner}
+              spin
+              className="inline-block ml-2"
+            />
+          )}
+        </div>
         {alreadyMinted && <span>Next mint {nextMintMinDate.fromNow()}</span>}
       </MainContainer>
     </>

@@ -20,9 +20,7 @@ export default function DefaultLayout() {
             <Login />
           </MainContainer>
         ) : (
-          <FaucetProvider>
-            <Outlet />
-          </FaucetProvider>
+          <Outlet />
         )}
       </main>
     </>

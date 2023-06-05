@@ -10,6 +10,7 @@ import { wagmiConfig } from 'lib/contract';
 import ErrorPage from 'pages/error';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import FaucetProvider from 'context/FaucetProvider';
 
 const router = createBrowserRouter(
   [
@@ -34,15 +35,19 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <ThemeProvider>
       <WagmiConfig config={wagmiConfig}>
-        <RouterProvider router={router} />
-        <ToastContainer
-          position="top-center"
-          autoClose={5000}
-          hideProgressBar={false}
-          closeOnClick
-          rtl={false}
-          theme="light"
-        />
+        <FaucetProvider>
+          <>
+            <RouterProvider router={router} />
+            <ToastContainer
+              position="top-center"
+              autoClose={5000}
+              hideProgressBar={false}
+              closeOnClick
+              rtl={false}
+              theme="light"
+            />
+          </>
+        </FaucetProvider>
       </WagmiConfig>
     </ThemeProvider>
   </React.StrictMode>

@@ -34,7 +34,7 @@ export default function FaucetProvider({
     address: import.meta.env.VITE_FAUCET_ADDRESS as '0x{string}',
     abi: faucetContractABI,
     functionName: 'lastMinted',
-    args: [address!],
+    args: [address ?? '0x0000000000000000000000000000000000000000'],
   });
   const {
     data: mintInterval = 0n,
@@ -49,9 +49,9 @@ export default function FaucetProvider({
 
   const refetch = async () => {
     return Promise.all([
-      refetchMaxMint,
-      refetchLastMinted,
-      refetchMintInterval,
+      refetchMaxMint(),
+      refetchLastMinted(),
+      refetchMintInterval(),
     ]);
   };
 
