@@ -2,6 +2,7 @@ import Login from 'components/Login';
 import MainContainer from 'components/MainContainer';
 import ThemeButton from 'components/ThemeButton';
 import UserProfile from 'components/UserProfile';
+import FaucetProvider from 'context/FaucetProvider';
 import { Outlet } from 'react-router-dom';
 import { useAccount } from 'wagmi';
 
@@ -19,7 +20,9 @@ export default function DefaultLayout() {
             <Login />
           </MainContainer>
         ) : (
-          <Outlet />
+          <FaucetProvider>
+            <Outlet />
+          </FaucetProvider>
         )}
       </main>
     </>

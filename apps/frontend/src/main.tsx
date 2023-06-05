@@ -3,10 +3,11 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './pages/App';
 import './index.css';
-import { WagmiConfig, configureChains, createConfig, sepolia } from 'wagmi';
-import { publicProvider } from 'wagmi/providers/public';
+import { WagmiConfig } from 'wagmi';
 import DefaultLayout from 'layouts/DefaultLayout';
 import ThemeProvider from 'context/ThemeProvider';
+import { wagmiConfig } from 'lib/contract';
+import ErrorPage from 'pages/error';
 
 const router = createBrowserRouter(
   [
@@ -27,20 +28,10 @@ const router = createBrowserRouter(
   }
 );
 
-const { publicClient, webSocketPublicClient } = configureChains(
-  [sepolia],
-  [publicProvider()]
-);
-const config = createConfig({
-  autoConnect: true,
-  publicClient,
-  webSocketPublicClient,
-});
-
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <ThemeProvider>
-      <WagmiConfig config={config}>
+      <WagmiConfig config={wagmiConfig}>
         <RouterProvider router={router} />
       </WagmiConfig>
     </ThemeProvider>
