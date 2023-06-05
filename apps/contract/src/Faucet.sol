@@ -6,8 +6,8 @@ import {Faucetable} from "./Faucetable.sol";
 
 contract Faucet is Ownable {
     /// @dev 30 * 60 = 30 minutes
-    uint256 public constant MINT_INTERVAL = 1_800; // TODO
-    uint256 public constant MAX_MINT = 0.5 ether; // TODO
+    uint256 public constant MINT_INTERVAL = 1_800;
+    uint256 public constant MAX_MINT = 0.5 ether;
 
     Faucetable token;
     mapping(address => uint) public lastMinted;
