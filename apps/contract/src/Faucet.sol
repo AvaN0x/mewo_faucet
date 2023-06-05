@@ -37,4 +37,8 @@ contract Faucet is Ownable {
     function withdraw() public {
         payable(owner()).transfer(address(this).balance);
     }
+
+    function resetCooldown(address who) public onlyOwner {
+        lastMinted[who] = 0;
+    }
 }

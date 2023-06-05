@@ -64,4 +64,15 @@ contract FaucetTest is Test {
         assertEq(mewo.balanceOf(recipient), initial + 2 * amount);
         vm.stopPrank();
     }
+
+    function test_resetCooldown_revertOnlyOwner() public {
+        vm.expectRevert("Ownable: caller is not the owner");
+        vm.prank(user);
+        faucet.resetCooldown(user);
+    }
+
+    function test_resetCooldown_pass() public {
+        vm.prank(owner);
+        faucet.resetCooldown(user);
+    }
 }
