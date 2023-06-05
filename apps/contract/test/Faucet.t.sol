@@ -63,7 +63,5 @@ contract FaucetTest is Test {
         faucet.mint(recipient, amount);
         assertEq(mewo.balanceOf(recipient), initial + 2 * amount);
         vm.stopPrank();
-
-        // TODO: test with cooldown vm.warp
     }
 }
