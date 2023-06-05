@@ -1,5 +1,7 @@
-import { configureChains, createConfig, sepolia } from 'wagmi';
+import { configureChains, createConfig, erc20ABI, sepolia } from 'wagmi';
 import { publicProvider } from 'wagmi/providers/public';
+
+const mewoContractABI = [...erc20ABI];
 
 const faucetContractABI = [
   {
@@ -77,4 +79,4 @@ const wagmiConfig = createConfig({
   webSocketPublicClient,
 });
 
-export { publicClient, wagmiConfig, faucetContractABI };
+export { publicClient, wagmiConfig, mewoContractABI, faucetContractABI };

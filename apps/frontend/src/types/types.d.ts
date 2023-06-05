@@ -6,6 +6,7 @@ type ThemeContext = {
 };
 
 type FaucetContext = {
+  balance: bigint;
   maxMint: bigint;
   lastMinted: bigint;
   mintInterval: bigint;

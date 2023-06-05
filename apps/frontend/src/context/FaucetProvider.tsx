@@ -1,8 +1,9 @@
-import { faucetContractABI } from 'lib/contract';
+import { faucetContractABI, mewoContractABI } from 'lib/contract';
 import { createContext, useContext, useState } from 'react';
 import { useAccount, useContractRead } from 'wagmi';
 
 const FaucetContext = createContext<FaucetContext>({
+  balance: 0n,
   maxMint: 0n,
   lastMinted: 0n,
   mintInterval: 0n,
@@ -15,6 +16,13 @@ export default function FaucetProvider({
   children?: JSX.Element;
 }) {
   const { address } = useAccount();
+
+  const { data: balance = 0n, refetch: refetchBalance } = useContractRead({
+    address: import.meta.env.VITE_MEWO_ADDRESS as '0x{string}',
+    abi: mewoContractABI,
+    functionName: 'balanceOf',
+    args: [address ?? '0x0000000000000000000000000000000000000000'],
+  });
   const {
     data: maxMint = 0n,
     isError: isErrorMaxMint,
@@ -52,12 +60,14 @@ export default function FaucetProvider({
       refetchMaxMint(),
       refetchLastMinted(),
       refetchMintInterval(),
+      refetchBalance(),
     ]);
   };
 
   return (
     <FaucetContext.Provider
       value={{
+        balance,
         maxMint,
         lastMinted,
         mintInterval,
